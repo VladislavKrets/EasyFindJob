@@ -1,9 +1,13 @@
 package easy.find.job.model.superjob;
 
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import easy.find.job.model.utils.HttpMethodUtils;
+import easy.find.job.model.utils.Vacancy;
 
 import java.io.IOException;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -21,8 +25,12 @@ public class SuperJobFindVacancies {
         headersMap.put("X-Api-App-Id", apiKey);
     }
 
-    public void getVacancies() throws IOException {
-        String answer = sjMethods.getMethod("vacancies", headersMap);
-        System.out.println(answer);
+    public List<Vacancy> getVacancies(String text) throws IOException {
+        String answer = sjMethods.getMethod(String.format("vacancies?keyword=%s&period=%s", text, "3"), headersMap);
+        GsonBuilder builder = new GsonBuilder();
+        builder.registerTypeAdapter(List.class, new JsonSuperJobVacanciesListConverter());
+        Gson gson = builder.create();
+        List<Vacancy> vacancyList = gson.fromJson(answer, List.class);
+        return vacancyList;
     }
 }

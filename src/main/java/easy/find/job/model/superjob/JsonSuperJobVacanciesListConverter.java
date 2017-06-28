@@ -1,12 +1,11 @@
 package easy.find.job.model.superjob;
 
-import com.google.gson.JsonDeserializationContext;
-import com.google.gson.JsonDeserializer;
-import com.google.gson.JsonElement;
-import com.google.gson.JsonParseException;
+import com.google.gson.*;
 import easy.find.job.model.utils.Vacancy;
 
 import java.lang.reflect.Type;
+import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -16,7 +15,18 @@ public class JsonSuperJobVacanciesListConverter implements JsonDeserializer<List
     @Override
     public List<Vacancy> deserialize(JsonElement jsonElement, Type type,
                                      JsonDeserializationContext jsonDeserializationContext) throws JsonParseException {
-       
-        return null;
+        List<Vacancy> vacancyList = new ArrayList<>();
+        JsonArray objects = jsonElement.getAsJsonObject().getAsJsonArray("objects");
+
+        for (JsonElement vacancyElement : objects) {
+            vacancyList.add(new Vacancy(
+                    vacancyElement.getAsJsonObject().get("profession").getAsString(),
+                    vacancyElement.getAsJsonObject().get("candidat").getAsString(),
+                    vacancyElement.getAsJsonObject().get("link").getAsString(),
+                    new Date(vacancyElement.getAsJsonObject().get("date_published").getAsInt() * 1000L)
+            ));
+        }
+
+        return vacancyList;
     }
 }
