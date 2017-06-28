@@ -2,6 +2,7 @@ package easy.find.job.model.hh;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import easy.find.job.model.base.BaseFindVacancies;
 import easy.find.job.model.utils.HttpMethodUtils;
 import easy.find.job.model.utils.Vacancy;
 import java.io.IOException;
@@ -11,7 +12,7 @@ import java.util.*;
 /**
  * Created by lollipop on 28.06.2017.
  */
-public class HHFindVacancies {
+public class HHFindVacancies implements BaseFindVacancies{
 
     private HttpMethodUtils hhMethods;
     private Map<String, String> headersMap;
@@ -24,6 +25,7 @@ public class HHFindVacancies {
         headersMap.put("Authorization", "Bearer " + accessToken);
     }
 
+    @Override
     public List<Vacancy> getVacancies(String text) throws IOException {
 
         String answer = hhMethods.getMethod(String.format("vacancies?text=%s&date_from=%s&per_page=%s",
