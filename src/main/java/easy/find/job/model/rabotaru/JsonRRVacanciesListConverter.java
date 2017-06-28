@@ -24,7 +24,7 @@ public class JsonRRVacanciesListConverter implements JsonDeserializer<List<Vacan
                 vacancyList.add(new Vacancy(
                         vacancyElement.getAsJsonObject().get("name").getAsString(),
                         "",
-                        "https://rabota.ru/vacancy" + vacancyElement.getAsJsonObject().get("id").getAsString(),
+                        "https://rabota.ru/vacancy/" + vacancyElement.getAsJsonObject().get("id").getAsString(),
                         new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ssX").parse(vacancyElement.getAsJsonObject().get("publishDate").getAsString())
                 ));
             } catch (ParseException e) {
