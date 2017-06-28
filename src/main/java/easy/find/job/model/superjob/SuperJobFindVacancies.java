@@ -7,6 +7,8 @@ import easy.find.job.model.utils.HttpMethodUtils;
 import easy.find.job.model.utils.Vacancy;
 
 import java.io.IOException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -28,7 +30,7 @@ public class SuperJobFindVacancies implements BaseFindVacancies{
 
     @Override
     public List<Vacancy> getVacancies(String text) throws IOException {
-        String answer = sjMethods.getMethod(String.format("vacancies?keyword=%s&period=%s", text, "3"), headersMap);
+        String answer = sjMethods.getMethod(String.format("vacancies?keyword=%s", text), headersMap);
         GsonBuilder builder = new GsonBuilder();
         builder.registerTypeAdapter(List.class, new JsonSuperJobVacanciesListConverter());
         Gson gson = builder.create();

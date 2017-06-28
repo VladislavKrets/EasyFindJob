@@ -38,4 +38,14 @@ public class Vacancy implements Comparable<Vacancy>{
     public int compareTo(Vacancy vacancy) {
         return vacancy.getCreatedDate().compareTo(this.getCreatedDate());
     }
+
+    @Override
+    public String toString() {
+        return "Vacancy{" +
+                "name='" + name + '\'' +
+                ", requirement='" + requirement + '\'' +
+                ", url='" + url + '\'' +
+                ", createdDate=" + createdDate +
+                '}';
+    }
 }

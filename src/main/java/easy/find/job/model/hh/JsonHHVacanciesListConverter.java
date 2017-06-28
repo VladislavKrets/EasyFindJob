@@ -19,11 +19,14 @@ public class JsonHHVacanciesListConverter implements JsonDeserializer<List<Vacan
         JsonArray items = jsonElement.getAsJsonObject().getAsJsonArray("items");
         List<Vacancy> vacancyList = new ArrayList<Vacancy>();
         SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd'T'hh:mm:ssz");
+        JsonElement requirement;
         for(JsonElement itemsElement : items) {
+            requirement = itemsElement.getAsJsonObject().get("snippet").getAsJsonObject().get("requirement");
+
             try {
                 vacancyList.add(new Vacancy(
                         itemsElement.getAsJsonObject().get("name").getAsString(),
-                        itemsElement.getAsJsonObject().get("snippet").getAsJsonObject().get("requirement").getAsString(),
+                        requirement.isJsonNull() ? "" : requirement.getAsString(),
                         itemsElement.getAsJsonObject().get("alternate_url").getAsString(),
                         dateFormat.parse(itemsElement.getAsJsonObject().get("published_at").getAsString())
 
