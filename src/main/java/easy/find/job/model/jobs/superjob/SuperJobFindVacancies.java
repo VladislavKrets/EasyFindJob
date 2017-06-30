@@ -1,4 +1,4 @@
-package easy.find.job.model.superjob;
+package easy.find.job.model.jobs.superjob;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
@@ -7,7 +7,6 @@ import easy.find.job.model.utils.HttpMethodUtils;
 import easy.find.job.model.utils.Vacancy;
 
 import java.io.IOException;
-import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -30,7 +29,9 @@ public class SuperJobFindVacancies implements BaseFindVacancies{
 
     @Override
     public List<Vacancy> getVacancies(String text) throws IOException {
-        String answer = sjMethods.getMethod(String.format("vacancies?keyword=%s", text), headersMap);
+        String answer = sjMethods.getMethod(String.format("vacancies?keyword=%s&date_published_from=%s", text,
+                String.valueOf((new Date().getTime() - 86400000)/1000L)), headersMap);
+
         GsonBuilder builder = new GsonBuilder();
         builder.registerTypeAdapter(List.class, new JsonSuperJobVacanciesListConverter());
         Gson gson = builder.create();

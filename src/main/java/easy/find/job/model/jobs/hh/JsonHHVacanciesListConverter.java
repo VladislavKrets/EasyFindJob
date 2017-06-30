@@ -1,4 +1,4 @@
-package easy.find.job.model.hh;
+package easy.find.job.model.jobs.hh;
 
 import com.google.gson.*;
 import easy.find.job.model.utils.Vacancy;

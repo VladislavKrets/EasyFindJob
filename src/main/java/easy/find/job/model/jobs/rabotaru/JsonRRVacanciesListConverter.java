@@ -1,4 +1,4 @@
-package easy.find.job.model.rabotaru;
+package easy.find.job.model.jobs.rabotaru;
 
 import com.google.gson.*;
 import easy.find.job.model.utils.Vacancy;

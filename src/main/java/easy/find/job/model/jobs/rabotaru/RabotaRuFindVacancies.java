@@ -1,4 +1,4 @@
-package easy.find.job.model.rabotaru;
+package easy.find.job.model.jobs.rabotaru;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
@@ -7,8 +7,6 @@ import easy.find.job.model.utils.HttpMethodUtils;
 import easy.find.job.model.utils.Vacancy;
 
 import java.io.IOException;
-import java.text.SimpleDateFormat;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;

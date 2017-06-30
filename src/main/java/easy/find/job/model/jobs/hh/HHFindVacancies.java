@@ -1,4 +1,4 @@
-package easy.find.job.model.hh;
+package easy.find.job.model.jobs.hh;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;

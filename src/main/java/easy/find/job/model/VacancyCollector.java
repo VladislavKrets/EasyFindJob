@@ -1,16 +1,21 @@
 package easy.find.job.model;
 
 import easy.find.job.model.base.BaseFindVacancies;
-import easy.find.job.model.hh.HHFindVacancies;
-import easy.find.job.model.rabotaru.RabotaRuFindVacancies;
-import easy.find.job.model.superjob.SuperJobFindVacancies;
+import easy.find.job.model.jobs.careerist.CareeristFindVacancies;
+import easy.find.job.model.jobs.hh.HHFindVacancies;
+import easy.find.job.model.jobs.rabotaru.RabotaRuFindVacancies;
+import easy.find.job.model.jobs.superjob.SuperJobFindVacancies;
 import easy.find.job.model.utils.Vacancy;
 
+import java.io.File;
+import java.io.IOException;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 import java.util.concurrent.*;
-import java.util.concurrent.atomic.AtomicBoolean;
 
 /**
  * Created by lollipop on 28.06.2017.
@@ -22,13 +27,50 @@ public class VacancyCollector {
 
     static {
         vacancyFinders = new ArrayList<>();
-        vacancyFinders.add(new HHFindVacancies());
+      /* vacancyFinders.add(new HHFindVacancies());
         vacancyFinders.add(new RabotaRuFindVacancies());
         vacancyFinders.add(new SuperJobFindVacancies());
+        vacancyFinders.add(new CareeristFindVacancies());*/
+
     }
 
     private VacancyCollector() {
         vacancies = new CopyOnWriteArrayList<>();
+        String uri = VacancyCollector.class.getResource("").getPath();
+        File models = new File(uri.substring(1, uri.length()) + "/jobs");
+
+        File[] files = models.listFiles();
+        List<String> paths = new ArrayList<>();
+        List<Class> classes = new ArrayList<>();
+        for (File file : files) {
+            if (file.isDirectory()) {
+                for (String line : file.list()) {
+                    paths.add(file.getAbsolutePath() + "\\" + line);
+                }
+            } else paths.add(file.getAbsolutePath());
+        }
+        for (String clazz : paths) {
+            try {
+                classes.add(Class.forName(clazz.substring(clazz.indexOf("easy\\find\\job"), clazz.length() - 6).replaceAll("\\\\", ".")));
+            } catch (ClassNotFoundException e) {
+                e.printStackTrace();
+            }
+        }
+        Class[] interfaces;
+        for (Class clazz : classes) {
+            System.out.println(clazz.getName());
+            interfaces = clazz.getInterfaces();
+            for (Class interfacce : interfaces) {
+                if (interfacce.getName().equals(BaseFindVacancies.class.getName())) {
+                    try {
+                        vacancyFinders.add((BaseFindVacancies) clazz.newInstance());
+                    } catch (InstantiationException | IllegalAccessException e) {
+                        e.printStackTrace();
+                    }
+
+                }
+            }
+        }
     }
 
     public static VacancyCollector getInstance() {
