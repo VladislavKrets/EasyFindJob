@@ -36,7 +36,7 @@ public class Main {
         }
 */
         VacancyCollector vacancyCollector = VacancyCollector.getInstance();
-        List<Vacancy> vacancyList = vacancyCollector.collectVacancies("Java");
+        List<Vacancy> vacancyList = vacancyCollector.collectVacancies("");
         System.out.println(vacancyList.size());
         for (Vacancy vacancy : vacancyList) {
             System.out.println(vacancy.getName());

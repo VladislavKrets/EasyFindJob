@@ -45,9 +45,9 @@ public class VacancyCollector {
         for (File file : files) {
             if (file.isDirectory()) {
                 for (String line : file.list()) {
-                    paths.add(file.getAbsolutePath() + "\\" + line);
+                    if (line.endsWith(".class")) paths.add(file.getAbsolutePath() + "\\" + line);
                 }
-            } else paths.add(file.getAbsolutePath());
+            } else if (file.getAbsolutePath().endsWith(".class"))paths.add(file.getAbsolutePath());
         }
         for (String clazz : paths) {
             try {
@@ -58,7 +58,6 @@ public class VacancyCollector {
         }
         Class[] interfaces;
         for (Class clazz : classes) {
-            System.out.println(clazz.getName());
             interfaces = clazz.getInterfaces();
             for (Class interfacce : interfaces) {
                 if (interfacce.getName().equals(BaseFindVacancies.class.getName())) {
