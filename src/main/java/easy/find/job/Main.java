@@ -1,6 +1,9 @@
 package easy.find.job;
 
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import easy.find.job.model.VacancyCollector;
+import easy.find.job.model.serializer.JsonVacancySerializer;
 import easy.find.job.model.utils.Vacancy;
 
 import java.io.IOException;
@@ -44,5 +47,6 @@ public class Main {
             System.out.println(vacancy.getCreatedDate());
             System.out.println();
         }
+
     }
 }
